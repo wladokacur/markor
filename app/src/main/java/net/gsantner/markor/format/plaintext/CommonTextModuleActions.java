@@ -11,17 +11,14 @@ package net.gsantner.markor.format.plaintext;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.StringRes;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.Utils;
@@ -37,8 +34,6 @@ import net.gsantner.opoc.format.plaintext.PlainTextStuff;
 import net.gsantner.opoc.util.Callback;
 import net.gsantner.opoc.util.ContextUtils;
 
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-
 public class CommonTextModuleActions {
     public static final int ACTION_SPECIAL_KEY__ICON = R.drawable.ic_keyboard_black_24dp;
     public static final String ACTION_SPECIAL_KEY = "press_special_key";
@@ -46,6 +41,8 @@ public class CommonTextModuleActions {
     public static final int ACTION_OPEN_LINK_BROWSER__ICON = R.drawable.ic_open_in_browser_black_24dp;
     public static final String ACTION_OPEN_LINK_BROWSER = "open_selected_link_in_browser";
 
+    public static final int ACTION_OPEN_IMAGE_IN_VIEWER__ICON = R.drawable.ic_image_black_24dp;
+    public static final String ACTION_OPEN_IMAGE_IN_VIEWER = "open_image_in_viewer";
 
     public static final int ACTION_COLOR_PICKER_ICON = R.drawable.ic_format_color_fill_black_24dp;
     public static final String ACTION_COLOR_PICKER = "open_color_picker";
@@ -80,7 +77,7 @@ public class CommonTextModuleActions {
     }
 
     // Returns true when handled
-    public boolean runAction(String action) {
+    public boolean runAction(String action, String... args) {
         final String origText = _hlEditor.getText().toString();
         switch (action) {
             case ACTION_SPECIAL_KEY: {
@@ -113,42 +110,36 @@ public class CommonTextModuleActions {
                 return true;
             }
             case ACTION_OPEN_LINK_BROWSER: {
-
                 String url;
                 if ((url = PlainTextStuff.tryExtractUrlAroundPos(_hlEditor.getText().toString(), _hlEditor.getSelectionStart())) != null) {
                     if (url.endsWith(")")) {
                         url = url.substring(0, url.length() - 1);
                     }
-                    if(url.contains(".jpg")|| url.contains(".png")|| url.contains(".jpeg")) {
+                    new ContextUtils(_activity).openWebpageInExternalBrowser(url);
+                }
+                return true;
+            }
+            case ACTION_OPEN_IMAGE_IN_VIEWER: {
+                String url = null;
+                if (args != null && args.length > 0 && args[0] != null) {
+                    url = args[0];
+                }
+                if ((url != null || (url = PlainTextStuff.tryExtractUrlAroundPos(_hlEditor.getText().toString(), _hlEditor.getSelectionStart())) != null)) {
+                    String lower = url.toLowerCase();
+                    if (lower.endsWith(".jpg") || lower.endsWith(".png") || lower.endsWith(".jpeg")) {
                         // inflate the layout of the popup window
-                        LayoutInflater inflater = (LayoutInflater) _activity.getSystemService(LAYOUT_INFLATER_SERVICE);
-                        View popupView = inflater.inflate(R.layout.popup_window, (ViewGroup) ((ViewGroup) this._activity.findViewById(android.R.id.content)).getChildAt(0), false);
+                        ImageView imageview = new ImageView(_activity);
+                        imageview.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                        new DownloadImageTask(imageview).execute(url);
 
                         // create the popup window
-                        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                        boolean focusable = true; // lets taps outside the popup also dismiss it
-                        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+                        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+                        final PopupWindow popupWindow = new PopupWindow(imageview, width, height, true);
+                        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
-                        // show the popup window
-                        // which view you pass in doesn't matter, it is only used for the window tolken
-                        popupWindow.showAtLocation(((ViewGroup) this._activity.findViewById(android.R.id.content)).getChildAt(0), Gravity.CENTER, 0, 0);
-                        // dismiss the popup window when touched
-                        popupView.setOnTouchListener(new View.OnTouchListener() {
-                            @Override
-                            public boolean onTouch(View v, MotionEvent event) {
-                                popupWindow.dismiss();
-                                return true;
-                            }
-                        });
-                        ImageView imageview = popupView.findViewById(R.id.imageview_url);
-                        if (imageview != null) {
-                            new DownloadImageTask((ImageView) imageview).execute(url);
-                        }
-                    }
-                    else {
-                        Toast.makeText(_activity.getBaseContext(), "This link does not contain any image to show", Toast.LENGTH_LONG).show();
-                        return true;
+                        popupWindow.showAtLocation(_hlEditor, Gravity.CENTER, 0, 0);
+                        imageview.setOnClickListener(view -> popupWindow.dismiss());
                     }
                 }
                 return true;

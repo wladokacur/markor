@@ -288,6 +288,7 @@ public class MarkdownTextModuleActions extends TextModuleActions {
         final Button buttonPictureGallery = view.findViewById(R.id.ui__select_path_dialog__gallery_picture);
         final Button buttonPictureCamera = view.findViewById(R.id.ui__select_path_dialog__camera_picture);
         final Button buttonPictureEdit = view.findViewById(R.id.ui__select_path_dialog__edit_picture);
+        final Button buttonPicturePreview = view.findViewById(R.id.ui__select_path_dialog__preview_picture);
 
         int startCursorPos = _hlEditor.getSelectionStart();
         if (_hlEditor.hasSelection()) {
@@ -387,6 +388,7 @@ public class MarkdownTextModuleActions extends TextModuleActions {
         File targetFolder = _document.getFile() != null ? _document.getFile().getParentFile() : _appSettings.getNotebookDirectory();
         buttonPictureCamera.setOnClickListener(button -> shu.requestCameraPicture(targetFolder));
         buttonPictureGallery.setOnClickListener(button -> shu.requestGalleryPicture());
+        buttonPictureGallery.setOnClickListener(button -> new CommonTextModuleActions(_activity, _document, _hlEditor).runAction(CommonTextModuleActions.ACTION_OPEN_IMAGE_IN_VIEWER, editPathUrl.getText().toString()));
 
         buttonBrowseFs.setOnClickListener(button -> {
             if (getActivity() instanceof AppCompatActivity) {

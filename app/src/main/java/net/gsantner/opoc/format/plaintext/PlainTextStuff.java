@@ -31,6 +31,10 @@ public class PlainTextStuff {
                         end = pos;
                     }
                 }
+                if (text.charAt(end-1) == ')'){
+                    // Probably MD link ending
+                    end--;
+                }
                 if ((end - begin) > 5 && end > 5) {
                     return text.substring(begin, end);
                 }

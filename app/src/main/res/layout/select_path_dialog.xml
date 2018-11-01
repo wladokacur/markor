@@ -71,6 +71,14 @@
             android:drawableLeft="@drawable/ic_crop_black_24dp"
             android:drawableStart="@drawable/ic_crop_black_24dp"
             android:text="@string/edit_picture" />
+
+        <Button
+            android:id="@+id/ui__select_path_dialog__preview_picture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_image_black_24dp"
+            android:drawableStart="@drawable/ic_image_black_24dp"
+            android:text="@string/preview" />
     </LinearLayout>
 
 </ScrollView>
