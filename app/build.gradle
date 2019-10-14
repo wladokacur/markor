@@ -37,6 +37,7 @@ android {
         buildConfigField "String", "BUILD_DATE", "\"${getBuildDate()}\""
         buildConfigField "String", "GITHASH", "\"${getGitHash()}\""
         setProperty("archivesBaseName", applicationId + "-v" + versionCode + "-" + versionName)
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     flavorDimensions "default"
@@ -69,6 +70,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            testCoverageEnabled true
+        }
     }
 
     configurations.all {
@@ -100,12 +104,38 @@ android {
         disable 'InvalidPackage'
         abortOnError false
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    sourceSets {
+        test {
+            resources.srcDirs += ['src/test/resources']
+        }
+        androidTest {
+            resources.srcDirs += ['src/androidTest/resources']
+        }
+    }
+
 }
 
+
+
+
 dependencies {
+
     // Testing
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.assertj:assertj-core:3.13.1'
+
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
+    // Optional -- Hamcrest library
+    androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
+    // Optional -- UI testing with Espresso
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
     // Android standard libs
     implementation "com.android.support:appcompat-v7:${version_library_appcompat}"
