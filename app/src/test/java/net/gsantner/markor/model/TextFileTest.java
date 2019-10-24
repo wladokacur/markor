@@ -1,6 +1,4 @@
 package net.gsantner.markor.model;
-import android.content.Context;
-
 import net.gsantner.opoc.util.FileUtils;
 
 import org.junit.Before;
@@ -73,6 +71,10 @@ public class TextFileTest {
         assertThat(diff[1]).isEqualTo(10);
 
     }
+
+
+
+
 
 
 }

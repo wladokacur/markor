@@ -13,7 +13,12 @@ import net.gsantner.markor.util.DocumentIO;
 
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class DocumentTest {
 
@@ -70,4 +75,20 @@ public class DocumentTest {
         }
         return document;
     }
+
+    @Test
+    public void testMock(){
+        Document document = mock(Document.class);
+        File file = null;
+        try {
+            file = File.createTempFile("mockFile",".txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+        when(document.getFile()).thenReturn(file);
+
+        assertThat(document.getFile()).isEqualTo(file);
+    }
+
 }
