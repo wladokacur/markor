@@ -1,7 +1,7 @@
 package net.gsantner.markor.model;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnitRunner;
 
 import net.gsantner.markor.R;
 import net.gsantner.markor.activity.MainActivity;
@@ -9,14 +9,16 @@ import net.gsantner.markor.activity.MainActivity;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
-@RunWith(AndroidJUnit4.class)
-public class InstrumentationTest  {
+
+@RunWith(JUnit4.class)
+public class InstrumentationTest  extends AndroidJUnitRunner {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -40,16 +42,6 @@ public class InstrumentationTest  {
 
         onView(withId(R.id.main__view_pager_container)).check(matches(isDisplayed()));
     }
-
-    @Test
-    public void testToolbar(){
-
-
-
-
-    }
-
-
 
 
 }

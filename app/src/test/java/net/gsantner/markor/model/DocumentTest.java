@@ -9,18 +9,31 @@
 #########################################################*/
 package net.gsantner.markor.model;
 
+import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
+
 import net.gsantner.markor.util.DocumentIO;
+import net.gsantner.markor.util.ShareUtil;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.File;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class DocumentTest {
+@RunWith(MockitoJUnitRunner.class)
+public class DocumentTest{
+
+    @Mock
+    Document document;
+
+    private Context context = ApplicationProvider.getApplicationContext();
 
     @Test
     public void documentOlderVersion() {
@@ -78,17 +91,40 @@ public class DocumentTest {
 
     @Test
     public void testMock(){
-        Document document = mock(Document.class);
         File file = null;
         try {
             file = File.createTempFile("mockFile",".txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
- 
+        //when
         when(document.getFile()).thenReturn(file);
-
+        //then
         assertThat(document.getFile()).isEqualTo(file);
+        assertThat(document.getTitle()).isEqualTo(null);
     }
 
+    @Test
+    public void maskedContent(){
+
+        assertThat(maskForFile(nd("HelloWorld","text"))).isEqualTo("aaaa");
+        assertThat(maskForFile(nd("http://ssss","text"))).isEqualTo("aaaa");
+        assertThat(maskForFile(nd("http://sssss-sssss","text"))).isEqualTo("aaaa");
+        assertThat(maskForFile(nd("HelloWosssssrld","text"))).isEqualTo("aaaa");
+        assertThat(maskForFile(nd("adadada","text"))).isEqualTo("aaaa");
+        assertThat(maskForFile(nd("HelloWoasdadrld","text"))).isEqualTo("aaaa");
+    }
+
+
+    public String maskForFile(Document document) {
+        return DocumentIO.getMaskedContent(document);
+    }
+
+
+    @Test
+    public void shareUtilTest(){
+        ShareUtil shareUtil = new ShareUtil(context);
+        shareUtil.setClipboard("ssss");
+        assertThat(shareUtil.getClipboard()).isEqualTo("sss");
+    }
 }
