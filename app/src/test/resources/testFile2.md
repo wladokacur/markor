@@ -1,23 +1,6 @@
-![](https://test.gsantner.net/matomo/piwik.php?action_name=inapp_Fchangelog&idsite=2&rec=1&urlref=https%3A%2F%2Fgithub.com%2Fgsantner%2Fmarkor%2FCHANGELOG.md&_cvar=%7B%221%22%3A%5B%22source%22%2C%22inapp_changelog%22%5D%2C%222%22%3A%5B%22project%22%2C%22markor%22%5D%2C%223%22%3A%5B%22packageid%22%2C%22net.gsantner.markor%22%5D%2C%224%22%3A%5B%22referrer%22%2C%22https%3A%2F%2Fgithub.com%2Fgsantner%2Fmarkor%2FCHANGELOG.md%22%5D%7D)
+![](https://test.gsantner.net/matomo/piwik.php?action_name=inapp_changelog&idsite=2&rec=1&urlref=https%3A%2F%2Fgithub.com%2Fgsantner%2Fmarkor%2FCHANGELOG.md&_cvar=%7B%221%22%3A%5B%22source%22%2C%22inapp_changelog%22%5D%2C%222%22%3A%5B%22project%22%2C%22markor%22%5D%2C%223%22%3A%5B%22packageid%22%2C%22net.gsantner.markor%22%5D%2C%224%22%3A%5B%22referrer%22%2C%22https%3A%2F%2Fgithub.com%2Fgsantner%2Fmarkor%2FCHANGELOG.md%22%5D%7D)
 
-
-### v2.1 [Blog post](https://gsantner.net/blog/2019/09/04/markor-v2.1-search-dotfiles-pdf-export.html?source=inapp_changelog&project=markor) | [Code changes](https://github.com/gsantner/markor/compare/v2.0.0...v2.1.0)  
-- Improved editor, highlighting and overall performance
-- New file dialog: Templates
-- New format: KeyValue - highlighting for json, ini, csv, yaml, vcard, ics, toml and other simple key-value like syntax
-- Long click on main view plus button -> open favourites/recents
-- Use lightweight Markdown heading highlighting on non-highend devices
-- Show SD Card dialog when opening file that is under SAF
-- Share: Rename PDF -> Print/PDF 
-- Text action to sort todo by date
-- Keep view mode scroll position
-- Remove LinkBox from main screen to improve performance
-- Make filesystem selection dialog fill screen
-- Rework share into: Use file browser to select favourite/recent/popular files
-- Special keys added: Insert page break for PDF/Printing, ohm key, punctation mark arrows
-- Append linefeed on end when saving
-- Show error when trying to rename to existing file/folder
-- Add special handling for percent encoded filenames in nextcloud/owncloud folder
+scoded filenames in nextcloud/owncloud folder
 - Link 'More->Help' to Project website FAQ
 - Debug Log settings option
 - Improve local/linked file opening when clicking link at preview

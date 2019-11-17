@@ -9,31 +9,24 @@
 #########################################################*/
 package net.gsantner.markor.model;
 
-import android.content.Context;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
-import androidx.test.core.app.ApplicationProvider;
-
-import net.gsantner.markor.util.DocumentIO;
-import net.gsantner.markor.util.ShareUtil;
+import java.io.File;
+import java.io.IOException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.io.File;
-import java.io.IOException;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import net.gsantner.markor.util.DocumentIO;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DocumentTest{
 
     @Mock
     Document document;
-
-    private Context context = ApplicationProvider.getApplicationContext();
 
     @Test
     public void documentOlderVersion() {
@@ -121,10 +114,4 @@ public class DocumentTest{
     }
 
 
-    @Test
-    public void shareUtilTest(){
-        ShareUtil shareUtil = new ShareUtil(context);
-        shareUtil.setClipboard("ssss");
-        assertThat(shareUtil.getClipboard()).isEqualTo("sss");
-    }
 }

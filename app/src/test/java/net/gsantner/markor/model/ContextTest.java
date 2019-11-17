@@ -1,29 +1,36 @@
 package net.gsantner.markor.model;
 
-import android.content.Context;
-
-import androidx.test.core.app.ApplicationProvider;
-
-import net.gsantner.markor.util.ShareUtil;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
-@RunWith(RobolectricTestRunner.class)
-public class ContextTest {
+import android.content.Context;
+import androidx.test.core.app.ApplicationProvider;
+import net.gsantner.markor.util.ShareUtil;
 
-    private Context context = ApplicationProvider.getApplicationContext();
+@RunWith(RobolectricTestRunner.class) public class ContextTest {
 
-    @Test
-    public void test(){
-        ShareUtil shareUtil = new ShareUtil(context);
-        shareUtil.setClipboard("ssss");
-        assertThat(shareUtil.getClipboard()).isEqualTo(new ArrayList<String>(Collections.singletonList("ssss")));
-    }
+	private Context context = ApplicationProvider.getApplicationContext();
+	private ShareUtil shareUtil;
+
+	@Before
+	public void prepareTest() {
+		shareUtil = new ShareUtil(context);
+	}
+
+	@Test
+	public void testClipboardCopy() {
+		String clipboardText = "clipboardText";
+		shareUtil.setClipboard(clipboardText);
+		assertThat(shareUtil.getClipboard()).isEqualTo(new ArrayList<String>(Collections.singletonList(clipboardText)));
+
+	}
+
+
 }
