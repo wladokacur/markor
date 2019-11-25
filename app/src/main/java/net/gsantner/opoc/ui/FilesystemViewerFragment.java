@@ -483,8 +483,7 @@ public class FilesystemViewerFragment extends GsFragmentBase
                 if (_filesystemViewerAdapter.areItemsSelected()) {
                     File file = new ArrayList<>(_filesystemViewerAdapter.getCurrentSelection()).get(0);
                     if(TextFormat.isTextFile(file,file.getAbsolutePath())){
-                        ShareUtil shareUtil = new ShareUtil(getContext());
-                        shareUtil.setClipboard(FileUtils.readTextFileFast(file));
+                        _shareUtil.setClipboard(FileUtils.readTextFileFast(file));
                     }
                 }
                 return true;

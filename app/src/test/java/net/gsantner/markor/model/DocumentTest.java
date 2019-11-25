@@ -9,21 +9,23 @@
 #########################################################*/
 package net.gsantner.markor.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
-
-import java.io.File;
-import java.io.IOException;
+import net.gsantner.markor.format.keyvalue.KeyValueConverter;
+import net.gsantner.markor.util.DocumentIO;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import net.gsantner.markor.util.DocumentIO;
+import java.io.File;
+import java.io.IOException;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DocumentTest{
+
 
     @Mock
     Document document;
@@ -85,6 +87,7 @@ public class DocumentTest{
     @Test
     public void testMock(){
         File file = null;
+        KeyValueConverter keyValueConverter = new KeyValueConverter();
         try {
             file = File.createTempFile("mockFile",".txt");
         } catch (IOException e) {
@@ -93,11 +96,13 @@ public class DocumentTest{
         //when
         when(document.getFile()).thenReturn(file);
         //then
+        assertThat(keyValueConverter.isFileOutOfThisFormat(document.getFile().getPath())).isNotEqualTo(null);
+        assertThat(keyValueConverter.isFileOutOfThisFormat(document.getFile().getPath())).isEqualTo(false);
+
         assertThat(document.getFile()).isEqualTo(file);
         assertThat(document.getTitle()).isEqualTo(null);
     }
 
-    @Test
     public void maskedContent(){
 
         assertThat(maskForFile(nd("HelloWorld","text"))).isEqualTo("aaaa");

@@ -1,6 +1,11 @@
 package net.gsantner.markor.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import net.gsantner.opoc.util.FileUtils;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,12 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import net.gsantner.opoc.util.FileUtils;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TextFileTest {
     FileUtils fileUtils = new FileUtils();
