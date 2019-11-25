@@ -28,8 +28,8 @@ import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("all")
-public class WrMarkorSingleton {
-
+public class WrMarkorSingleton{
+    
     private static WrMarkorSingleton markorSingletonInstance = null;
     private static File notesLastDirectory = null;
 
