@@ -8,11 +8,15 @@
  *   https://opensource.org/licenses/MIT
 ###########################################################*/
 package other.writeily.model;
+
 import android.content.Context;
 import android.support.v4.provider.DocumentFile;
+
 import net.gsantner.markor.format.TextFormat;
 import net.gsantner.markor.util.ShareUtil;
+
 import org.apache.commons.io.IOUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -24,8 +28,8 @@ import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("all")
-public class WrMarkorSingleton {
-
+public class WrMarkorSingleton{
+    
     private static WrMarkorSingleton markorSingletonInstance = null;
     private static File notesLastDirectory = null;
 
