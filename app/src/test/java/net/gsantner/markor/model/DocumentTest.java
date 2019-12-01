@@ -105,7 +105,6 @@ public class DocumentTest{
         //then
         assertThat(document.getFile()).isEqualTo(file);
         assertThat(document.getTitle()).isEqualTo("MyTitle");
-
     }
 
     @Test
