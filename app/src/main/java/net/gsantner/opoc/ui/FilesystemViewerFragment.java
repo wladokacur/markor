@@ -19,6 +19,13 @@
  */
 package net.gsantner.opoc.ui;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -35,7 +42,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import net.gsantner.markor.R;
 import net.gsantner.markor.format.TextFormat;
 import net.gsantner.markor.ui.FileInfoDialog;
@@ -47,16 +55,6 @@ import net.gsantner.markor.util.PermissionChecker;
 import net.gsantner.markor.util.ShareUtil;
 import net.gsantner.opoc.activity.GsFragmentBase;
 import net.gsantner.opoc.util.FileUtils;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import other.writeily.model.WrMarkorSingleton;
 import other.writeily.ui.WrConfirmDialog;
 import other.writeily.ui.WrRenameDialog;
@@ -483,7 +481,8 @@ public class FilesystemViewerFragment extends GsFragmentBase
                 if (_filesystemViewerAdapter.areItemsSelected()) {
                     File file = new ArrayList<>(_filesystemViewerAdapter.getCurrentSelection()).get(0);
                     if(TextFormat.isTextFile(file,file.getAbsolutePath())){
-                        _shareUtil.setClipboard(FileUtils.readTextFileFast(file));
+                        ShareUtil shareUtil = new ShareUtil(getContext());
+                        shareUtil.setClipboard(FileUtils.readTextFile(file));
                     }
                 }
                 return true;
